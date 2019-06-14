@@ -1,14 +1,19 @@
 syntax = "proto3";
 
-package OpenTibiaUnity.Protobuf.Appearances001;
+package OpenTibiaUnity.Proto.Appearances;
 
-// Package name must contain the revision name in order to convert
-// old versions to the new one..
+enum HookType {
+	South = 0;
+	East = 1;
+}
 
-// This is not compaitable with Tibia 11
-// This is written to suit the converted base of the latest/reviewed
-
-// Enums
+enum PlayerAction {
+	None = 0;
+	Look = 1;
+	Use = 2;
+	Open = 3;
+	AutowalkHighlight = 4;
+}
 
 enum FrameGroupType {
 	FrameGroupType_Idle = 0;
@@ -29,46 +34,60 @@ message Appearance {
 }
 
 message AppearanceFlags {
-	uint32 ground = 1;
+	Ground ground = 1;
 	bool groundBorder = 2;
-	bool onBottom = 3;
-	bool onTop = 4;
+	bool bottom = 3;
+	bool top = 4;
 	bool container = 5;
 	bool stackable = 6;
 	bool forceUse = 7;
 	bool multiUse = 8;
-	uint32 writable = 9;
-	uint32 writableOnce = 10;
+	Writable writable = 9;
+	Writable writableOnce = 10;
 	bool fluidContainer = 11;
 	bool splash = 12;
-	bool notWalkable = 13;
-	bool notMoveable = 14;
-	bool blockProjectile = 15;
-	bool notPathable = 16;
-	bool noMoveAnimation = 17;
-	bool pickupable = 18;
-	bool hangable = 19;
-	bool hookSouth = 20;
-	bool hookEast = 21;
-	bool rotateable = 22;
-	LightInfo light = 23;
-	bool dontHide = 24;
-	bool translucent = 25;
-	Vector2 displacement = 26;
-	uint32 elevation = 27;
-	bool lyingCorpse = 28;
-	bool animateAlways = 29;
-	uint32 minimapColor = 30;
-	uint32 lensHelp = 31;
-	bool fullGround = 32;
-	bool Look = 33;
-	uint32 cloth = 34;
-	MarketInfo market = 35;
-	uint32 defaultAction = 36;
-	bool wrapable = 37;
-	bool unWrapable = 38;
-	bool topEffect = 39;
-	bool usable = 40;
+	bool unpassable = 13;
+	bool unmoveable = 14;
+	bool unsight = 15;
+	bool blockPath = 16;
+	bool pickupable = 17;
+	bool hangable = 18;
+	Hook hook = 19;
+	bool rotateable = 20;
+	LightInfo light = 21;
+	bool dontHide = 22;
+	bool translucent = 23;
+	Offset offset = 24;
+	Elevation elevation = 25;
+	bool lyingCorpse = 26;
+	bool animateAlways = 27;
+	MiniMap minimap = 28;
+	LensHelp lensHelp = 29;
+	bool fullGround = 30;
+	bool Look = 31;
+	Clothes cloth = 32;
+	MarketInfo market = 33;
+	DefaultAction defaultAction = 34;
+	bool use = 35;
+	bool wrapable = 36;
+	bool unWrapable = 37;
+	bool topEffect = 38;
+	
+	bool floorChange = 252;
+	bool noMoveAnimation = 253;
+	bool charges = 254;
+}
+
+message Ground {
+	uint32 speed = 1;
+}
+
+message Writable {
+	uint32 length = 1;
+}
+
+message Hook {
+	HookType type = 1;
 }
 
 message LightInfo {
@@ -76,9 +95,25 @@ message LightInfo {
 	uint32 color = 2;
 }
 
-message Vector2 {
+message MiniMap {
+	uint32 color = 1;
+}
+
+message Offset {
 	uint32 x = 1;
 	uint32 y = 2;
+}
+
+message Elevation {
+	uint32 elevation = 1;
+}
+
+message LensHelp {
+	uint32 id = 1;
+}
+
+message Clothes {
+	uint32 slot = 1;
 }
 
 message MarketInfo {
@@ -88,6 +123,10 @@ message MarketInfo {
 	string name = 4;
 	uint32 restrictVocation = 5;
 	uint32 requiredLevel = 6;
+}
+
+message DefaultAction {
+	PlayerAction action = 1;
 }
 
 message FrameGroup {
